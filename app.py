@@ -30,6 +30,26 @@ from flask import Flask, jsonify
 from pyngrok import ngrok
 from fredapi import Fred
 import logging
+import os
+from alpha_vantage.timeseries import TimeSeries
+from alpha_vantage.fundamentaldata import FundamentalData
+from fredapi import Fred
+import praw
+
+# Sichere Nutzung der API-Keys über Environment Variables
+openai.api_key = os.environ.get('OPENAI_API_KEY')
+ALPHA_API_KEY = os.environ.get('ALPHA_API_KEY')
+FRED_API_KEY = os.environ.get('FRED_API_KEY')
+FINNHUB_API_KEY = os.environ.get('FINNHUB_API_KEY')
+
+fred = Fred(api_key=FRED_API_KEY)
+
+reddit = praw.Reddit(
+    client_id=os.environ.get('REDDIT_CLIENT_ID'),
+    client_secret=os.environ.get('REDDIT_SECRET'),
+    user_agent=os.environ.get('REDDIT_USER_AGENT')
+)
+
 
 # OpenAI API-Key
 OPENAI_API_KEY = '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'
