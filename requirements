@@ -1,0 +1,16 @@
+flask
+yfinance
+requests
+beautifulsoup4
+openai
+scikit-learn
+tensorflow
+pyngrok
+pycoingecko
+requests-cache
+alpha_vantage
+fredapi
+praw
+tweepy
+numpy
+pandas
