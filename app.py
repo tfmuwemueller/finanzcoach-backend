@@ -14,10 +14,12 @@ from pyngrok import ngrok
 from fredapi import Fred
 import logging
 import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 from alpha_vantage.timeseries import TimeSeries
 from alpha_vantage.fundamentaldata import FundamentalData
 from fredapi import Fred
 import praw
+import tensorflow as tf
 
 # Sichere Nutzung der API-Keys über Environment Variables
 openai.api_key = os.environ.get('OPENAI_API_KEY')
