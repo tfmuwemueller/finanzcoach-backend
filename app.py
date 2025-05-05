@@ -51,17 +51,6 @@ reddit = praw.Reddit(
 )
 
 
-# OpenAI API-Key
-OPENAI_API_KEY = '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'
-openai.api_key = OPENAI_API_KEY
-
-# pyngrok API-Key
-ngrok.set_auth_token("2wWxiXxLoZzRma3ssIxq2jz5Wbd_5iufwnc2KQRjkGg9EdA1m")
-
-# FRED StLouis API-Key
-FRED_API_KEY = '4559ec6ea165bf4b0576824600e75997'
-fred = Fred(api_key=FRED_API_KEY)
-
 from pycoingecko import CoinGeckoAPI
 cg = CoinGeckoAPI()
 
@@ -73,16 +62,12 @@ def get_crypto_data(ticker, days=365):  # Maximal 1 Jahr Datenhistorie erlaubt
 from alpha_vantage.timeseries import TimeSeries
 import pandas as pd
 
-API_KEY = "87WSBSVKINDJN89S"
-
 def get_alpha_vantage_data(ticker):
     ts = TimeSeries(key=API_KEY, output_format='pandas')
     data, meta_data = ts.get_daily(symbol=ticker, outputsize='full')
     return data
 
 from alpha_vantage.fundamentaldata import FundamentalData
-
-API_KEY = "87WSBSVKINDJN89S"  # Alpha Vantage API-Key
 
 def get_alpha_vantage_dividend(ticker):
     fd = FundamentalData(key=API_KEY, output_format='json')
@@ -126,8 +111,6 @@ def get_etf_data(ticker, period='3y'):
 
 import requests
 
-FINNHUB_API_KEY = 'd0baj5pr01qo0h63gjjgd0baj5pr01qo0h63gjk0'
-
 def get_dividend_finnhub(ticker):
     url = f'https://finnhub.io/api/v1/stock/metric?symbol={ticker}&metric=all&token={FINNHUB_API_KEY}'
 
@@ -144,8 +127,6 @@ def get_dividend_finnhub(ticker):
         return "N/A"
 
 from alpha_vantage.timeseries import TimeSeries
-
-ALPHA_API_KEY = 'dein_alpha_vantage_api_key'
 
 def get_bond_data(symbol, outputsize='full'):
     ts = TimeSeries(key=ALPHA_API_KEY, output_format='pandas')
@@ -389,28 +370,10 @@ def predict_crypto_price(prices, days_to_predict=30, prediction_days=60, epochs=
     predicted_prices = scaler.inverse_transform(np.array(prediction_list).reshape(-1, 1))
     return predicted_prices.flatten().tolist()
 
-import requests
-
-NZ_API_KEY = 'e05547e888cf413e91fc9f7b40eb5085'
-NZ_CPI_ENDPOINT = "https://api.stats.govt.nz/opendata/v1/ConsumersPriceIndex/Observations?$top=1"
-
-headers = {'Ocp-Apim-Subscription-Key': NZ_API_KEY}
-
-def get_nz_inflation():
-    response = requests.get(NZ_CPI_ENDPOINT, headers=headers)
-    if response.status_code == 200:
-        data = response.json()
-        latest_observation = data['items'][0]
-        inflation_rate = latest_observation['value']
-        return inflation_rate
-    else:
-        raise Exception(f"API Fehler: {response.status_code} - {response.text}")
-
 from alpha_vantage.fundamentaldata import FundamentalData
 import openai
 import logging
 
-API_KEY = "87WSBSVKINDJN89S"
 fd = FundamentalData(key=API_KEY, output_format='json')
 
 def get_rating_alpha_vantage(ticker):
@@ -436,8 +399,6 @@ def gpt_rating_fallback(entity):
 
 from alpha_vantage.timeseries import TimeSeries
 import pandas as pd
-
-API_KEY = "87WSBSVKINDJN89S"
 
 def get_commodity_data(symbol, interval='daily'):
     ts = TimeSeries(key=API_KEY, output_format='pandas')
@@ -481,37 +442,10 @@ def get_commodity_sentiment(rohstoff, preis_trend):
 
     return response.choices[0].message.content.strip()
 
-import tweepy
-import openai
-
-# Twitter API Credentials
-client = tweepy.Client(bearer_token='AAAAAAAAAAAAAAAAAAAAAHos1AEAAAAA1ZsP%2BdYDkCODOZgZWtIkqA4fHHk%3DGaJ0Fw0N3XTDBBQ1TzVQL3vofsssUcvI8bbfs1gjinuPwPH8xj')
-
-def get_twitter_sentiment(keyword, num_tweets=100):
-    tweets = client.search_recent_tweets(query=keyword, max_results=num_tweets)
-
-    texts = [tweet.text for tweet in tweets.data]
-
-    prompt = f"Analysiere das allgemeine Sentiment aus diesen Tweets zu {keyword}: {texts}"
-
-    response = openai.chat.completions.create(
-        model="gpt-4o",
-        messages=[{"role": "system", "content": "Analysiere präzise das Sentiment (positiv, neutral, negativ)."},
-                  {"role": "user", "content": prompt}]
-    )
-
-    sentiment = response.choices[0].message.content.strip()
-    return sentiment
-
 import praw
 import openai
 
 # Reddit API Credentials
-reddit = praw.Reddit(
-    client_id='pEisL0zyijPiObFfsCEHZA',
-    client_secret='T-G5cCdVtlAultzgMA1kjz85dVJEaQ',
-    user_agent='MySentimentAnalysisApp/0.1 by Desperate-Date7971'
-)
 
 def get_reddit_sentiment(subreddit_name, keyword, num_posts=100):
     subreddit = reddit.subreddit(subreddit_name)
@@ -867,12 +801,6 @@ def rating(ticker):
 
 # Reddit Anbindung
 import praw
-
-reddit = praw.Reddit(
-    client_id='pEisL0zyijPiObFfsCEHZA',               # deine Client ID
-    client_secret='T-G5cCdVtlAultzgMA1kjz85dVJEaQ',     # dein Client Secret
-    user_agent='MySentimentAnalysisApp/0.1 by Desperate-Date7971'  # dein User-Agent
-)
 
 @app.route('/sentiment/reddit/<string:subreddit_name>/<string:keyword>')
 def reddit_sentiment(subreddit_name, keyword):
