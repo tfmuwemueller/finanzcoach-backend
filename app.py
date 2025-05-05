@@ -7,16 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1EyfaNs70Dxx2fLpeOoZe7fWyAR08JvFF
 """
 
-!pip install yfinance requests beautifulsoup4 openai scikit-learn tensorflow flask pyngrok pycoingecko requests-cache alpha_vantage fredapi praw tweepy
-
-import logging
-
-logging.basicConfig(
-    filename='analyse_logs.log',
-    level=logging.ERROR,
-    format='%(asctime)s:%(levelname)s:%(message)s'
-)
-
 import yfinance as yf
 import numpy as np
 import pandas as pd
@@ -50,6 +40,11 @@ reddit = praw.Reddit(
     user_agent=os.environ.get('REDDIT_USER_AGENT')
 )
 
+logging.basicConfig(
+    filename='analyse_logs.log',
+    level=logging.ERROR,
+    format='%(asctime)s:%(levelname)s:%(message)s'
+)
 
 from pycoingecko import CoinGeckoAPI
 cg = CoinGeckoAPI()
